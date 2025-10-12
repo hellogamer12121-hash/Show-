@@ -33,6 +33,7 @@
       h2 { font-size: 1.3rem; }
       p { font-size: 0.95rem; }
       .card { padding: 0.8rem; }
+      table, th, td { font-size:12px; padding:6px; }
     }
   </style>
 </head>
@@ -74,7 +75,6 @@
   <!-- Quiz Section -->
   <section id="quizzes" class="section">
     <h2>Cricket Quiz</h2>
-
     <div class="card quiz-box" data-answer="India">
       <p>Who won the 2011 Cricket World Cup?</p>
       <div>
@@ -96,7 +96,6 @@
     <button onclick="submitQuiz()" style="margin-top:10px; padding:10px 20px; font-weight:600; border:none; border-radius:6px; cursor:pointer; background-color:#1e1e1e; color:#fff;">
       Submit Quiz
     </button>
-
     <div id="quizResult" style="margin-top:1rem; font-weight:600;"></div>
   </section>
 
@@ -104,7 +103,37 @@
   <section id="points" class="section">
     <h2>Points Table</h2>
     <div class="card" style="text-align:center;">
-      <p>Points Table will be available soon ✅</p>
+      <label for="leagueSelect">Choose League: </label>
+      <select id="leagueSelect" onchange="updateLeague()">
+        <option value="ipl">IPL</option>
+        <option value="ifl">IFL</option>
+      </select>
+
+      <label for="yearSelect" id="yearLabel" style="margin-left:10px;">Choose Year: </label>
+      <select id="yearSelect" onchange="showPointsTable()">
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+        <option value="2025">2025</option>
+      </select>
+    </div>
+
+    <div id="tableContainer" class="card" style="margin-top:1rem; overflow-x:auto;">
+      <h3 id="tableTitle">IPL 2023 Points Table</h3>
+      <table id="pointsTable">
+        <thead>
+          <tr>
+            <th>Pos</th>
+            <th>Team</th>
+            <th>Matches</th>
+            <th>Wins</th>
+            <th>Losses</th>
+            <th>No Result</th>
+            <th>NRR</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </div>
   </section>
 
@@ -142,19 +171,18 @@
   </footer>
 
   <script>
+    // Section Navigation
     function showSection(id) {
       document.querySelectorAll('section').forEach(section => section.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       window.scrollTo(0, 0);
     }
 
+    // Quiz Functions
     function selectAnswer(button) {
       const parent = button.closest('.quiz-box');
       const buttons = parent.querySelectorAll('button');
-      buttons.forEach(b => {
-        b.style.backgroundColor = '#eee';
-        b.style.color = '#222';
-      });
+      buttons.forEach(b => { b.style.backgroundColor = '#eee'; b.style.color = '#222'; });
       button.style.backgroundColor = '#ddd';
       button.style.color = '#000';
       parent.selected = button.textContent;
@@ -163,98 +191,130 @@
     function submitQuiz() {
       const quizBoxes = document.querySelectorAll('.quiz-box');
       let score = 0;
-
       quizBoxes.forEach(box => {
         const correctAnswer = box.dataset.answer;
         const selected = box.selected;
         const buttons = box.querySelectorAll('button');
-
         buttons.forEach(btn => {
-          if (btn.textContent === correctAnswer) {
-            btn.style.backgroundColor = 'green';
-            btn.style.color = 'white';
-          } else if (btn.textContent === selected) {
-            btn.style.backgroundColor = 'red';
-            btn.style.color = 'white';
-          }
+          if (btn.textContent === correctAnswer) btn.style.backgroundColor = 'green', btn.style.color = 'white';
+          else if (btn.textContent === selected) btn.style.backgroundColor = 'red', btn.style.color = 'white';
         });
-
         if (selected === correctAnswer) score++;
       });
-
       document.getElementById('quizResult').textContent = `You scored ${score} out of ${quizBoxes.length}`;
     }
 
-    // All-Time Stats Data
+    // Stats Data
     const iplStats = {
-      runs: [
-        {name: "Virat Kohli", value: 6628},
-        {name: "Shikhar Dhawan", value: 5756},
-        {name: "Suresh Raina", value: 5528},
-        {name: "David Warner", value: 5440},
-        {name: "Rohit Sharma", value: 5235},
-      ],
-      wickets: [
-        {name: "Dwayne Bravo", value: 183},
-        {name: "Lasith Malinga", value: 170},
-        {name: "Amit Mishra", value: 166},
-        {name: "Sunil Narine", value: 136},
-        {name: "Piyush Chawla", value: 150},
-      ],
-      catches: [
-        {name: "Suresh Raina", value: 130},
-        {name: "MS Dhoni", value: 120},
-        {name: "Virat Kohli", value: 105},
-        {name: "David Warner", value: 98},
-        {name: "AB de Villiers", value: 95},
-      ]
+      runs: [{name:"Virat Kohli",value:6628},{name:"Shikhar Dhawan",value:5756},{name:"Suresh Raina",value:5528},{name:"David Warner",value:5440},{name:"Rohit Sharma",value:5235}],
+      wickets: [{name:"Dwayne Bravo",value:183},{name:"Lasith Malinga",value:170},{name:"Amit Mishra",value:166},{name:"Sunil Narine",value:136},{name:"Piyush Chawla",value:150}],
+      catches: [{name:"Suresh Raina",value:130},{name:"MS Dhoni",value:120},{name:"Virat Kohli",value:105},{name:"David Warner",value:98},{name:"AB de Villiers",value:95}]
     };
-
     const intlStats = {
-      runs: [
-        {name: "Sachin Tendulkar", value: 34357},
-        {name: "Kumar Sangakkara", value: 28016},
-        {name: "Ricky Ponting", value: 27483},
-        {name: "Virat Kohli", value: 27000},
-        {name: "Mahela Jayawardene", value: 25957},
-      ],
-      wickets: [
-        {name: "Muttiah Muralitharan", value: 1347},
-        {name: "Shane Warne", value: 1206},
-        {name: "Anil Kumble", value: 956},
-        {name: "James Anderson", value: 980},
-        {name: "Glenn McGrath", value: 949},
-      ],
-      catches: [
-        {name: "Rahul Dravid", value: 210},
-        {name: "Mahela Jayawardene", value: 218},
-        {name: "Jacques Kallis", value: 200},
-        {name: "Ricky Ponting", value: 160},
-        {name: "AB de Villiers", value: 200},
-      ]
+      runs: [{name:"Sachin Tendulkar",value:34357},{name:"Kumar Sangakkara",value:28016},{name:"Ricky Ponting",value:27483},{name:"Virat Kohli",value:27000},{name:"Mahela Jayawardene",value:25957}],
+      wickets: [{name:"Muttiah Muralitharan",value:1347},{name:"Shane Warne",value:1206},{name:"Anil Kumble",value:956},{name:"James Anderson",value:980},{name:"Glenn McGrath",value:949}],
+      catches: [{name:"Rahul Dravid",value:210},{name:"Mahela Jayawardene",value:218},{name:"Jacques Kallis",value:200},{name:"Ricky Ponting",value:160},{name:"AB de Villiers",value:200}]
     };
-
     function showStats() {
       const type = document.getElementById('statsType').value;
       const data = type === 'ipl' ? iplStats : intlStats;
       let html = '';
-
       html += '<h3>Top 5 Run Scorers</h3><table><tr><th>Player</th><th>Runs</th></tr>';
       data.runs.forEach(p => html += `<tr><td>${p.name}</td><td>${p.value}</td></tr>`);
       html += '</table>';
-
       html += '<h3>Top 5 Wicket Takers</h3><table><tr><th>Player</th><th>Wickets</th></tr>';
       data.wickets.forEach(p => html += `<tr><td>${p.name}</td><td>${p.value}</td></tr>`);
       html += '</table>';
-
       html += '<h3>Top 5 Catches Taken</h3><table><tr><th>Player</th><th>Catches</th></tr>';
       data.catches.forEach(p => html += `<tr><td>${p.name}</td><td>${p.value}</td></tr>`);
       html += '</table>';
-
       document.getElementById('statsDisplay').innerHTML = html;
     }
+    showStats();
 
-    showStats(); // Initialize stats on load
+    // Points Table Data
+    const iplPoints = {
+      "2023":[
+        ["1","Gujarat Titans (GT)",14,10,4,0,"+0.809",20],
+        ["2","Chennai Super Kings (CSK)",14,8,5,1,"+0.652",17],
+        ["3","Lucknow Super Giants (LSG)",14,8,5,1,"+0.284",17],
+        ["4","Mumbai Indians (MI)",14,8,6,0,"-0.044",16],
+        ["5","Rajasthan Royals (RR)",14,7,7,0,"+0.148",14],
+        ["6","Royal Challengers Bangalore (RCB)",14,7,7,0,"+0.135",14],
+        ["7","Kolkata Knight Riders (KKR)",14,6,8,0,"-0.239",12],
+        ["8","Punjab Kings (PBKS)",14,6,8,0,"-0.472",12],
+        ["9","Sunrisers Hyderabad (SRH)",14,4,10,0,"-0.625",8],
+        ["10","Delhi Capitals (DC)",14,4,10,0,"-0.766",8]
+      ],
+      "2024":[
+        ["1","Kolkata Knight Riders (KKR)",14,9,5,0,"+1.428",18],
+        ["2","Sunrisers Hyderabad (SRH)",14,8,6,0,"+0.517",16],
+        ["3","Rajasthan Royals (RR)",14,8,6,0,"+0.409",16],
+        ["4","Royal Challengers Bangalore (RCB)",14,7,7,0,"+0.220",14],
+        ["5","Punjab Kings (PBKS)",14,6,8,0,"-0.220",12],
+        ["6","Gujarat Titans (GT)",14,5,9,0,"-0.797",10],
+        ["7","Delhi Capitals (DC)",14,5,9,0,"-0.824",10],
+        ["8","Lucknow Super Giants (LSG)",14,3,11,0,"-1.117",6],
+        ["9","Chennai Super Kings (CSK)",14,2,12,0,"-1.276",4],
+        ["10","Sunrisers Hyderabad (SRH)",14,2,12,0,"-1.276",4]
+      ],
+      "2025":[
+        ["1","Punjab Kings (PBKS)",14,9,4,1,"+0.372",19],
+        ["2","Royal Challengers Bangalore (RCB)",14,9,4,1,"+0.289",19],
+        ["3","Gujarat Titans (GT)",14,9,5,0,"+0.753",18],
+        ["4","Mumbai Indians (MI)",14,8,6,0,"+0.239",16],
+        ["5","Rajasthan Royals (RR)",14,6,8,0,"-0.117",12],
+        ["6","Lucknow Super Giants (LSG)",14,6,8,0,"-0.217",12],
+        ["7","Kolkata Knight Riders (KKR)",14,5,9,0,"-0.417",10],
+        ["8","Delhi Capitals (DC)",14,4,10,0,"-0.517",8],
+        ["9","Sunrisers Hyderabad (SRH)",14,4,10,0,"-0.617",8],
+        ["10","Chennai Super Kings (CSK)",14,3,11,0,"-0.717",6]
+      ]
+    };
+
+    const iflPoints = {
+      "2025":[
+        ["1","Team A",20,15,5,0,"+1.2",45],
+        ["2","Team B",20,13,7,0,"+0.8",39],
+        ["3","Team C",20,12,8,0,"+0.5",36],
+        ["4","Team D",20,10,10,0,"-0.1",30],
+        ["5","Team E",20,8,12,0,"-0.4",24],
+        ["6","Team F",20,6,14,0,"-0.7",18],
+        ["7","Team G",20,5,15,0,"-1.1",15],
+        ["8","Team H",20,4,16,0,"-1.5",12],
+        ["9","Team I",20,3,17,0,"-1.8",9],
+        ["10","Team J",20,2,18,0,"-2.0",6]
+      ]
+    };
+
+    function showPointsTable() {
+      const league = document.getElementById('leagueSelect').value;
+      const year = document.getElementById('yearSelect').value;
+      const tbody = document.querySelector('#pointsTable tbody');
+      tbody.innerHTML = '';
+      let data = (league === 'ipl') ? iplPoints[year] : iflPoints[year];
+      document.getElementById('tableTitle').textContent = (league === 'ipl' ? 'IPL ' : 'IFL ') + year + ' Points Table';
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        row.forEach(cell => {
+          const td = document.createElement('td');
+          td.textContent = cell;
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+    }
+
+    function updateLeague() {
+      const league = document.getElementById('leagueSelect').value;
+      const yearSelect = document.getElementById('yearSelect');
+      const yearLabel = document.getElementById('yearLabel');
+      if (league === 'ipl') { yearSelect.style.display = 'inline'; yearLabel.style.display = 'inline'; }
+      else { yearSelect.style.display = 'none'; yearLabel.style.display = 'none'; }
+      showPointsTable();
+    }
+
+    showPointsTable(); // initialize table
   </script>
 </body>
 </html>
