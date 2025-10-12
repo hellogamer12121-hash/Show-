@@ -7,156 +7,32 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* Basic Reset & Font */
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      color: #222;
-    }
-
-    /* Header */
-    header {
-      background-color: #1e1e1e;
-      color: #fff;
-      padding: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    header h1 {
-      font-size: 1.5rem;
-      margin: 0;
-    }
-
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 0.5rem;
-    }
-
-    nav a {
-      color: #fff;
-      margin: 0.5rem 0.8rem;
-      text-decoration: none;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    nav a:hover {
-      color: #ffcc00;
-    }
-
-    /* Sections */
-    .hero, .section {
-      padding: 2rem;
-      display: none;
-      animation: fadeIn 0.5s ease-in;
-    }
-
-    .active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-
-    /* Cards */
-    .card {
-      background: white;
-      padding: 1rem;
-      margin: 1rem 0;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    /* Video Cards */
-    #videoList {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-    }
-
-    .card img {
-      width: 100%;
-      border-radius: 8px;
-    }
-
-    .card button {
-      background-color: #1e1e1e;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 10px 16px;
-      cursor: pointer;
-      font-weight: 600;
-      margin-top: 0.5rem;
-    }
-
-    .card button:hover {
-      background-color: #333;
-    }
-
-    /* Quiz */
-    .quiz-box button {
-      margin: 5px;
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      background-color: #eee;
-      font-weight: 600;
-    }
-
-    .quiz-box button:hover {
-      background-color: #ddd;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background-color: #1e1e1e;
-      color: #fff;
-      margin-top: 2rem;
-    }
-
-    /* Responsive */
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #222; }
+    header { background-color: #1e1e1e; color: #fff; padding: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    header h1 { font-size: 1.5rem; margin: 0; }
+    nav { display: flex; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem; }
+    nav a { color: #fff; margin: 0.5rem 0.8rem; text-decoration: none; font-weight: 600; cursor: pointer; }
+    nav a:hover { color: #ffcc00; }
+    .hero, .section { padding: 2rem; display: none; animation: fadeIn 0.5s ease-in; }
+    .active { display: block; }
+    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+    .card { background: white; padding: 1rem; margin: 1rem 0; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .card button { background-color: #1e1e1e; color: #fff; border: none; border-radius: 6px; padding: 10px 16px; cursor: pointer; font-weight: 600; margin: 5px 5px 0 0; }
+    .card button:hover { background-color: #333; }
+    .quiz-box button { background-color: #eee; color: #222; margin: 5px 5px 0 0; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+    .quiz-box button:hover { background-color: #ddd; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #f0f0f0; }
+    footer { text-align: center; padding: 1rem; background-color: #1e1e1e; color: #fff; margin-top: 2rem; }
     @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      nav {
-        flex-direction: column;
-      }
-
-      .hero, .section {
-        padding: 1.5rem 1rem;
-      }
-
-      h2 {
-        font-size: 1.3rem;
-      }
-
-      p {
-        font-size: 0.95rem;
-      }
-
-      .card {
-        padding: 0.8rem;
-      }
+      header { flex-direction: column; text-align: center; }
+      nav { flex-direction: column; }
+      .hero, .section { padding: 1.5rem 1rem; }
+      h2 { font-size: 1.3rem; }
+      p { font-size: 0.95rem; }
+      .card { padding: 0.8rem; }
     }
   </style>
 </head>
@@ -167,8 +43,10 @@
     <nav>
       <a onclick="showSection('home')">Home</a>
       <a onclick="showSection('live')">Videos</a>
-      <a onclick="showSection('quizzes')">Quiz</a>
-      <a onclick="showSection('fantasy')">Fantasy Picks</a>
+      <a onclick="showSection('quizzes')">Quizzes</a>
+      <a onclick="showSection('points')">Points Table</a>
+      <a onclick="showSection('schedule')">Schedule</a>
+      <a onclick="showSection('stats')">Stats</a>
       <a onclick="showSection('about')">About</a>
     </nav>
   </header>
@@ -176,59 +54,86 @@
   <!-- Home -->
   <section id="home" class="hero active">
     <h2>Follow Live Cricket & Play Together</h2>
-    <p>Stay updated with cricket action, enjoy quizzes, and explore top fantasy picks — all in one place.</p>
+    <p>Stay updated with cricket action, enjoy quizzes, points table, schedule, and all-time stats — all in one place.</p>
   </section>
 
   <!-- Videos Section -->
-<section id="live" class="section">
-  <h2>Subscribe to Indian Gamer (@gamer10011)</h2>
-  <div class="card" style="text-align:center;">
-    <p>Enjoy exciting gaming videos, tutorials, and gameplay highlights on my YouTube channel.</p>
-    <a href="https://www.youtube.com/@gamer10011" target="_blank">
-      <button style="background-color:#ff0000; color:#fff; font-weight:700; padding:12px 20px; border:none; border-radius:8px; cursor:pointer;">
-        🎮 Subscribe on YouTube
-      </button>
-    </a>
-    <p style="margin-top:1rem;">Click the button above to watch all my latest videos and join the <strong>Indian Gamer</strong> community!</p>
-  </div>
-</section>
-
-
+  <section id="live" class="section">
+    <h2>Subscribe to Indian Gamer (@gamer10011)</h2>
+    <div class="card" style="text-align:center;">
+      <p>Enjoy exciting gaming videos, tutorials, and gameplay highlights on my YouTube channel.</p>
+      <a href="https://www.youtube.com/@gamer10011" target="_blank">
+        <button style="background-color:#ff0000; color:#fff; font-weight:700; padding:12px 20px; border:none; border-radius:8px; cursor:pointer;">
+          🎮 Subscribe on YouTube
+        </button>
+      </a>
+      <p style="margin-top:1rem;">Click above to watch latest videos!</p>
+    </div>
+  </section>
 
   <!-- Quiz Section -->
   <section id="quizzes" class="section">
     <h2>Cricket Quiz</h2>
-    <div class="card quiz-box">
+
+    <div class="card quiz-box" data-answer="India">
       <p>Who won the 2011 Cricket World Cup?</p>
-      <button onclick="checkAnswer(this, 'India')">India</button>
-      <button onclick="checkAnswer(this, 'Australia')">Australia</button>
-      <button onclick="checkAnswer(this, 'Sri Lanka')">Sri Lanka</button>
+      <div>
+        <button onclick="selectAnswer(this)">India</button>
+        <button onclick="selectAnswer(this)">Australia</button>
+        <button onclick="selectAnswer(this)">Sri Lanka</button>
+      </div>
     </div>
-    <div class="card quiz-box">
+
+    <div class="card quiz-box" data-answer="Sachin Tendulkar">
       <p>Which player has the most centuries in international cricket?</p>
-      <button onclick="checkAnswer(this, 'Sachin Tendulkar')">Sachin Tendulkar</button>
-      <button onclick="checkAnswer(this, 'Virat Kohli')">Virat Kohli</button>
-      <button onclick="checkAnswer(this, 'Ricky Ponting')">Ricky Ponting</button>
+      <div>
+        <button onclick="selectAnswer(this)">Sachin Tendulkar</button>
+        <button onclick="selectAnswer(this)">Virat Kohli</button>
+        <button onclick="selectAnswer(this)">Ricky Ponting</button>
+      </div>
+    </div>
+
+    <button onclick="submitQuiz()" style="margin-top:10px; padding:10px 20px; font-weight:600; border:none; border-radius:6px; cursor:pointer; background-color:#1e1e1e; color:#fff;">
+      Submit Quiz
+    </button>
+
+    <div id="quizResult" style="margin-top:1rem; font-weight:600;"></div>
+  </section>
+
+  <!-- Points Table Section -->
+  <section id="points" class="section">
+    <h2>Points Table</h2>
+    <div class="card" style="text-align:center;">
+      <p>Points Table will be available soon ✅</p>
     </div>
   </section>
 
-  <!-- Fantasy Picks -->
-  <section id="fantasy" class="section">
-    <h2>Fantasy Picks</h2>
-    <div class="card">
-      <p><strong>Top Picks for Today:</strong></p>
-      <ul>
-        <li>Virat Kohli – Consistent performer</li>
-        <li>Jasprit Bumrah – Wicket-taking bowler</li>
-        <li>Ben Stokes – All-rounder potential</li>
-      </ul>
+  <!-- Schedule Section -->
+  <section id="schedule" class="section">
+    <h2>Match Schedule</h2>
+    <div class="card" style="text-align:center;">
+      <p>Schedule will be available soon ✅</p>
     </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section id="stats" class="section">
+    <h2>All-Time Player Stats</h2>
+    <div class="card" style="text-align:center;">
+      <label for="statsType">Choose Stats Type: </label>
+      <select id="statsType" onchange="showStats()">
+        <option value="ipl">IPL All-Time</option>
+        <option value="international">International All-Time</option>
+      </select>
+    </div>
+
+    <div id="statsDisplay" class="card" style="margin-top:1rem;"></div>
   </section>
 
   <!-- About -->
   <section id="about" class="section">
     <h2>About CricNPlay</h2>
-    <p>CricNPlay brings live videos, exciting quizzes, fantasy suggestions, and more for every cricket lover. Play, learn, and enjoy your favorite sport anytime, anywhere.</p>
+    <p>CricNPlay brings live videos, exciting quizzes, points table updates, schedules, and all-time cricket stats for every cricket lover. Play, learn, and enjoy!</p>
   </section>
 
   <!-- Footer -->
@@ -238,22 +143,118 @@
 
   <script>
     function showSection(id) {
-      document.querySelectorAll('section').forEach(section => {
-        section.classList.remove('active');
-      });
+      document.querySelectorAll('section').forEach(section => section.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       window.scrollTo(0, 0);
     }
 
-    function checkAnswer(button, correctAnswer) {
-      if (button.textContent === correctAnswer) {
-        button.style.backgroundColor = 'green';
-        button.style.color = 'white';
-      } else {
-        button.style.backgroundColor = 'red';
-        button.style.color = 'white';
-      }
+    function selectAnswer(button) {
+      const parent = button.closest('.quiz-box');
+      const buttons = parent.querySelectorAll('button');
+      buttons.forEach(b => {
+        b.style.backgroundColor = '#eee';
+        b.style.color = '#222';
+      });
+      button.style.backgroundColor = '#ddd';
+      button.style.color = '#000';
+      parent.selected = button.textContent;
     }
+
+    function submitQuiz() {
+      const quizBoxes = document.querySelectorAll('.quiz-box');
+      let score = 0;
+
+      quizBoxes.forEach(box => {
+        const correctAnswer = box.dataset.answer;
+        const selected = box.selected;
+        const buttons = box.querySelectorAll('button');
+
+        buttons.forEach(btn => {
+          if (btn.textContent === correctAnswer) {
+            btn.style.backgroundColor = 'green';
+            btn.style.color = 'white';
+          } else if (btn.textContent === selected) {
+            btn.style.backgroundColor = 'red';
+            btn.style.color = 'white';
+          }
+        });
+
+        if (selected === correctAnswer) score++;
+      });
+
+      document.getElementById('quizResult').textContent = `You scored ${score} out of ${quizBoxes.length}`;
+    }
+
+    // All-Time Stats Data
+    const iplStats = {
+      runs: [
+        {name: "Virat Kohli", value: 6628},
+        {name: "Shikhar Dhawan", value: 5756},
+        {name: "Suresh Raina", value: 5528},
+        {name: "David Warner", value: 5440},
+        {name: "Rohit Sharma", value: 5235},
+      ],
+      wickets: [
+        {name: "Dwayne Bravo", value: 183},
+        {name: "Lasith Malinga", value: 170},
+        {name: "Amit Mishra", value: 166},
+        {name: "Sunil Narine", value: 136},
+        {name: "Piyush Chawla", value: 150},
+      ],
+      catches: [
+        {name: "Suresh Raina", value: 130},
+        {name: "MS Dhoni", value: 120},
+        {name: "Virat Kohli", value: 105},
+        {name: "David Warner", value: 98},
+        {name: "AB de Villiers", value: 95},
+      ]
+    };
+
+    const intlStats = {
+      runs: [
+        {name: "Sachin Tendulkar", value: 34357},
+        {name: "Kumar Sangakkara", value: 28016},
+        {name: "Ricky Ponting", value: 27483},
+        {name: "Virat Kohli", value: 27000},
+        {name: "Mahela Jayawardene", value: 25957},
+      ],
+      wickets: [
+        {name: "Muttiah Muralitharan", value: 1347},
+        {name: "Shane Warne", value: 1206},
+        {name: "Anil Kumble", value: 956},
+        {name: "James Anderson", value: 980},
+        {name: "Glenn McGrath", value: 949},
+      ],
+      catches: [
+        {name: "Rahul Dravid", value: 210},
+        {name: "Mahela Jayawardene", value: 218},
+        {name: "Jacques Kallis", value: 200},
+        {name: "Ricky Ponting", value: 160},
+        {name: "AB de Villiers", value: 200},
+      ]
+    };
+
+    function showStats() {
+      const type = document.getElementById('statsType').value;
+      const data = type === 'ipl' ? iplStats : intlStats;
+      let html = '';
+
+      html += '<h3>Top 5 Run Scorers</h3><table><tr><th>Player</th><th>Runs</th></tr>';
+      data.runs.forEach(p => html += `<tr><td>${p.name}</td><td>${p.value}</td></tr>`);
+      html += '</table>';
+
+      html += '<h3>Top 5 Wicket Takers</h3><table><tr><th>Player</th><th>Wickets</th></tr>';
+      data.wickets.forEach(p => html += `<tr><td>${p.name}</td><td>${p.value}</td></tr>`);
+      html += '</table>';
+
+      html += '<h3>Top 5 Catches Taken</h3><table><tr><th>Player</th><th>Catches</th></tr>';
+      data.catches.forEach(p => html += `<tr><td>${p.name}</td><td>${p.value}</td></tr>`);
+      html += '</table>';
+
+      document.getElementById('statsDisplay').innerHTML = html;
+    }
+
+    showStats(); // Initialize stats on load
   </script>
 </body>
 </html>
