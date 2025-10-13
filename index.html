@@ -6,6 +6,16 @@
   <title>CricNPlay | Cricket Scores, Quizzes & More</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L3Y8XMB2ZL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L3Y8XMB2ZL');
+  </script>
+
   <style>
     * { box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #222; }
@@ -171,11 +181,19 @@
   </footer>
 
   <script>
-    // Section Navigation
+    // Section Navigation with GA virtual pageviews
     function showSection(id) {
       document.querySelectorAll('section').forEach(section => section.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       window.scrollTo(0, 0);
+
+      // Track virtual pageview in GA
+      if (typeof gtag === 'function') {
+        gtag('event', 'page_view', {
+          page_title: id,
+          page_path: '/' + id
+        });
+      }
     }
 
     // Quiz Functions
@@ -318,5 +336,3 @@
   </script>
 </body>
 </html>
-
-
