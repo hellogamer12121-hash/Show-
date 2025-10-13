@@ -12,7 +12,6 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-L3Y8XMB2ZL');
   </script>
 
@@ -68,7 +67,7 @@
     <p>Stay updated with cricket action, enjoy quizzes, points table, schedule, and all-time stats — all in one place.</p>
   </section>
 
-  <!-- Videos Section -->
+  <!-- Videos -->
   <section id="live" class="section">
     <h2>Subscribe to Indian Gamer (@gamer10011)</h2>
     <div class="card" style="text-align:center;">
@@ -82,7 +81,7 @@
     </div>
   </section>
 
-  <!-- Quiz Section -->
+  <!-- Quiz -->
   <section id="quizzes" class="section">
     <h2>Cricket Quiz</h2>
     <div class="card quiz-box" data-answer="India">
@@ -109,14 +108,14 @@
     <div id="quizResult" style="margin-top:1rem; font-weight:600;"></div>
   </section>
 
-  <!-- Points Table Section -->
+  <!-- Points Table -->
   <section id="points" class="section">
     <h2>Points Table</h2>
     <div class="card" style="text-align:center;">
       <label for="leagueSelect">Choose League: </label>
       <select id="leagueSelect" onchange="updateLeague()">
+        <option value="ifl" selected>IFL</option>
         <option value="ipl">IPL</option>
-        <option value="ifl">IFL</option>
       </select>
 
       <label for="yearSelect" id="yearLabel" style="margin-left:10px;">Choose Year: </label>
@@ -128,17 +127,18 @@
     </div>
 
     <div id="tableContainer" class="card" style="margin-top:1rem; overflow-x:auto;">
-      <h3 id="tableTitle">IPL 2023 Points Table</h3>
+      <h3 id="tableTitle">IFL Season 1 Points Table</h3>
       <table id="pointsTable">
         <thead>
           <tr>
             <th>Pos</th>
             <th>Team</th>
-            <th>Matches</th>
+            <th>Played</th>
             <th>Wins</th>
             <th>Losses</th>
-            <th>No Result</th>
-            <th>NRR</th>
+            <th>VF</th>
+            <th>VA</th>
+            <th>V%</th>
             <th>Points</th>
           </tr>
         </thead>
@@ -147,7 +147,7 @@
     </div>
   </section>
 
-  <!-- Schedule Section -->
+  <!-- Schedule -->
   <section id="schedule" class="section">
     <h2>Match Schedule</h2>
     <div class="card" style="text-align:center;">
@@ -155,7 +155,7 @@
     </div>
   </section>
 
-  <!-- Stats Section -->
+  <!-- Stats -->
   <section id="stats" class="section">
     <h2>All-Time Player Stats</h2>
     <div class="card" style="text-align:center;">
@@ -165,7 +165,6 @@
         <option value="international">International All-Time</option>
       </select>
     </div>
-
     <div id="statsDisplay" class="card" style="margin-top:1rem;"></div>
   </section>
 
@@ -175,28 +174,22 @@
     <p>CricNPlay brings live videos, exciting quizzes, points table updates, schedules, and all-time cricket stats for every cricket lover. Play, learn, and enjoy!</p>
   </section>
 
-  <!-- Footer -->
   <footer>
     &copy; 2025 CricNPlay. All rights reserved.
   </footer>
 
   <script>
-    // Section Navigation with GA virtual pageviews
+    // Navigation
     function showSection(id) {
       document.querySelectorAll('section').forEach(section => section.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       window.scrollTo(0, 0);
-
-      // Track virtual pageview in GA
       if (typeof gtag === 'function') {
-        gtag('event', 'page_view', {
-          page_title: id,
-          page_path: '/' + id
-        });
+        gtag('event', 'page_view', { page_title: id, page_path: '/' + id });
       }
     }
 
-    // Quiz Functions
+    // Quiz Logic
     function selectAnswer(button) {
       const parent = button.closest('.quiz-box');
       const buttons = parent.querySelectorAll('button');
@@ -205,24 +198,62 @@
       button.style.color = '#000';
       parent.selected = button.textContent;
     }
-
     function submitQuiz() {
       const quizBoxes = document.querySelectorAll('.quiz-box');
       let score = 0;
       quizBoxes.forEach(box => {
-        const correctAnswer = box.dataset.answer;
+        const correct = box.dataset.answer;
         const selected = box.selected;
         const buttons = box.querySelectorAll('button');
         buttons.forEach(btn => {
-          if (btn.textContent === correctAnswer) btn.style.backgroundColor = 'green', btn.style.color = 'white';
+          if (btn.textContent === correct) btn.style.backgroundColor = 'green', btn.style.color = 'white';
           else if (btn.textContent === selected) btn.style.backgroundColor = 'red', btn.style.color = 'white';
         });
-        if (selected === correctAnswer) score++;
+        if (selected === correct) score++;
       });
       document.getElementById('quizResult').textContent = `You scored ${score} out of ${quizBoxes.length}`;
     }
 
-    // Stats Data
+    // IPL Points (FULL RESTORED)
+    const iplPoints = {
+      "2023":[
+        ["1","Gujarat Titans (GT)",14,10,4,0,"+0.809",20],
+        ["2","Chennai Super Kings (CSK)",14,8,5,1,"+0.652",17],
+        ["3","Lucknow Super Giants (LSG)",14,8,5,1,"+0.284",17],
+        ["4","Mumbai Indians (MI)",14,8,6,0,"-0.044",16],
+        ["5","Rajasthan Royals (RR)",14,7,7,0,"+0.148",14],
+        ["6","Royal Challengers Bangalore (RCB)",14,7,7,0,"+0.135",14],
+        ["7","Kolkata Knight Riders (KKR)",14,6,8,0,"-0.239",12],
+        ["8","Punjab Kings (PBKS)",14,6,8,0,"-0.472",12],
+        ["9","Sunrisers Hyderabad (SRH)",14,4,10,0,"-0.625",8],
+        ["10","Delhi Capitals (DC)",14,4,10,0,"-0.766",8]
+      ],
+      "2024":[
+        ["1","Kolkata Knight Riders (KKR)",14,9,5,0,"+1.428",18],
+        ["2","Sunrisers Hyderabad (SRH)",14,8,6,0,"+0.517",16],
+        ["3","Rajasthan Royals (RR)",14,8,6,0,"+0.409",16],
+        ["4","Royal Challengers Bangalore (RCB)",14,7,7,0,"+0.220",14],
+        ["5","Punjab Kings (PBKS)",14,6,8,0,"-0.220",12],
+        ["6","Gujarat Titans (GT)",14,5,9,0,"-0.797",10],
+        ["7","Delhi Capitals (DC)",14,5,9,0,"-0.824",10],
+        ["8","Lucknow Super Giants (LSG)",14,3,11,0,"-1.117",6],
+        ["9","Chennai Super Kings (CSK)",14,2,12,0,"-1.276",4]
+      ],
+      "2025":[
+        ["1","Punjab Kings (PBKS)",14,9,4,1,"+0.372",19],
+        ["2","Royal Challengers Bangalore (RCB)",14,9,4,1,"+0.289",19],
+        ["3","Gujarat Titans (GT)",14,9,5,0,"+0.753",18],
+        ["4","Mumbai Indians (MI)",14,8,6,0,"+0.239",16],
+        ["5","Rajasthan Royals (RR)",14,6,8,0,"-0.117",12],
+        ["6","Lucknow Super Giants (LSG)",14,6,8,0,"-0.217",12],
+        ["7","Kolkata Knight Riders (KKR)",14,5,9,0,"-0.417",10],
+        ["8","Delhi Capitals (DC)",14,4,10,0,"-0.517",8],
+        ["9","Sunrisers Hyderabad (SRH)",14,4,10,0,"-0.617",8],
+        ["10","Chennai Super Kings (CSK)",14,3,11,0,"-0.717",6]
+      ]
+    };
+
+    // Stats data restored
     const iplStats = {
       runs: [{name:"Virat Kohli",value:6628},{name:"Shikhar Dhawan",value:5756},{name:"Suresh Raina",value:5528},{name:"David Warner",value:5440},{name:"Rohit Sharma",value:5235}],
       wickets: [{name:"Dwayne Bravo",value:183},{name:"Lasith Malinga",value:170},{name:"Amit Mishra",value:166},{name:"Piyush Chawla",value:150},{name:"Sunil Narine",value:136}],
@@ -250,77 +281,63 @@
     }
     showStats();
 
-    // Points Table Data
-    const iplPoints = {
-      "2023":[
-        ["1","Gujarat Titans (GT)",14,10,4,0,"+0.809",20],
-        ["2","Chennai Super Kings (CSK)",14,8,5,1,"+0.652",17],
-        ["3","Lucknow Super Giants (LSG)",14,8,5,1,"+0.284",17],
-        ["4","Mumbai Indians (MI)",14,8,6,0,"-0.044",16],
-        ["5","Rajasthan Royals (RR)",14,7,7,0,"+0.148",14],
-        ["6","Royal Challengers Bangalore (RCB)",14,7,7,0,"+0.135",14],
-        ["7","Kolkata Knight Riders (KKR)",14,6,8,0,"-0.239",12],
-        ["8","Punjab Kings (PBKS)",14,6,8,0,"-0.472",12],
-        ["9","Sunrisers Hyderabad (SRH)",14,4,10,0,"-0.625",8],
-        ["10","Delhi Capitals (DC)",14,4,10,0,"-0.766",8]
-      ],
-      "2024":[
-        ["1","Kolkata Knight Riders (KKR)",14,9,5,0,"+1.428",18],
-        ["2","Sunrisers Hyderabad (SRH)",14,8,6,0,"+0.517",16],
-        ["3","Rajasthan Royals (RR)",14,8,6,0,"+0.409",16],
-        ["4","Royal Challengers Bangalore (RCB)",14,7,7,0,"+0.220",14],
-        ["5","Punjab Kings (PBKS)",14,6,8,0,"-0.220",12],
-        ["6","Gujarat Titans (GT)",14,5,9,0,"-0.797",10],
-        ["7","Delhi Capitals (DC)",14,5,9,0,"-0.824",10],
-        ["8","Lucknow Super Giants (LSG)",14,3,11,0,"-1.117",6],
-        ["9","Chennai Super Kings (CSK)",14,2,12,0,"-1.276",4],
-        ["10","Sunrisers Hyderabad (SRH)",14,2,12,0,"-1.276",4]
-      ],
-      "2025":[
-        ["1","Punjab Kings (PBKS)",14,9,4,1,"+0.372",19],
-        ["2","Royal Challengers Bangalore (RCB)",14,9,4,1,"+0.289",19],
-        ["3","Gujarat Titans (GT)",14,9,5,0,"+0.753",18],
-        ["4","Mumbai Indians (MI)",14,8,6,0,"+0.239",16],
-        ["5","Rajasthan Royals (RR)",14,6,8,0,"-0.117",12],
-        ["6","Lucknow Super Giants (LSG)",14,6,8,0,"-0.217",12],
-        ["7","Kolkata Knight Riders (KKR)",14,5,9,0,"-0.417",10],
-        ["8","Delhi Capitals (DC)",14,4,10,0,"-0.517",8],
-        ["9","Sunrisers Hyderabad (SRH)",14,4,10,0,"-0.617",8],
-        ["10","Chennai Super Kings (CSK)",14,3,11,0,"-0.717",6]
-      ]
-    };
+    // Load IFL data from JSON and sort
+    async function loadIFLPoints() {
+      try {
+        const response = await fetch("ifl_points.json");
+        const data = await response.json();
+        // sort by Points desc, then Vpercent desc
+        data.sort((a,b) => b.Points - a.Points || b.Vpercent - a.Vpercent);
+        window.iflData = data;
+        showPointsTable();
+      } catch (error) {
+        console.error("Error loading IFL Points JSON:", error);
+      }
+    }
 
-    const iflPoints = {
-      "2025":[
-        ["1","Team A",20,15,5,0,"+1.2",45],
-        ["2","Team B",20,13,7,0,"+0.8",39],
-        ["3","Team C",20,12,8,0,"+0.5",36],
-        ["4","Team D",20,10,10,0,"-0.1",30],
-        ["5","Team E",20,8,12,0,"-0.4",24],
-        ["6","Team F",20,6,14,0,"-0.7",18],
-        ["7","Team G",20,5,15,0,"-1.1",15],
-        ["8","Team H",20,4,16,0,"-1.5",12],
-        ["9","Team I",20,3,17,0,"-1.8",9],
-        ["10","Team J",20,2,18,0,"-2.0",6]
-      ]
-    };
-
+    // Show Points Table
     function showPointsTable() {
       const league = document.getElementById('leagueSelect').value;
       const year = document.getElementById('yearSelect').value;
       const tbody = document.querySelector('#pointsTable tbody');
       tbody.innerHTML = '';
-      let data = (league === 'ipl') ? iplPoints[year] : iflPoints[year];
-      document.getElementById('tableTitle').textContent = (league === 'ipl' ? 'IPL ' : 'IFL ') + year + ' Points Table';
-      data.forEach(row => {
-        const tr = document.createElement('tr');
-        row.forEach(cell => {
-          const td = document.createElement('td');
-          td.textContent = cell;
-          tr.appendChild(td);
+
+      if (league === 'ipl') {
+        const data = iplPoints[year];
+        document.getElementById('tableTitle').textContent = 'IPL ' + year + ' Points Table';
+        data.forEach(row => {
+          const tr = document.createElement('tr');
+          row.forEach(cell => {
+            const td = document.createElement('td');
+            td.textContent = cell;
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
         });
-        tbody.appendChild(tr);
-      });
+      } else {
+        if (!window.iflData) {
+          document.getElementById('tableTitle').textContent = 'Loading IFL Season 1 Points Table...';
+          loadIFLPoints();
+          return;
+        }
+        document.getElementById('tableTitle').textContent = 'IFL Season 1 Points Table';
+        window.iflData.forEach((team, i) => {
+          const tr = document.createElement('tr');
+          tr.style.backgroundColor = team.color;
+          tr.innerHTML = `
+            <td>${i + 1}</td>
+            <td>${team.name}</td>
+            <td>${team.P}</td>
+            <td>${team.W}</td>
+            <td>${team.L}</td>
+            <td>${team.VF}</td>
+            <td>${team.VA}</td>
+            <td>${team.Vpercent.toFixed(2)}%</td>
+            <td>${team.Points}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
     }
 
     function updateLeague() {
@@ -332,7 +349,7 @@
       showPointsTable();
     }
 
-    showPointsTable(); // initialize table
+    loadIFLPoints(); // Default: load IFL
   </script>
 </body>
 </html>
